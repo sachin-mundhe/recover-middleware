@@ -22,13 +22,12 @@ func (rw *ResponseWriter) WriteHeader(statusCode int) {
 
 //Flush It copies data from personal Response writer to http.Response writer
 func (rw *ResponseWriter) Flush() {
+
 	if rw.status != 0 {
+		rw.ResponseWriter.Header().Set("Content-Type", "text/html")
 		rw.ResponseWriter.WriteHeader(rw.status)
 	}
 	for _, v := range rw.writes {
 		rw.ResponseWriter.Write(v)
-		// if err != nil {
-		// 	fmt.Println("Error: ", err)
-		// }
 	}
 }
